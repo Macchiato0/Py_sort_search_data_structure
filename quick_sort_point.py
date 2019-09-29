@@ -36,9 +36,10 @@ def quicksort(list, start, end):
   
   
 ##################################
-unsorted_list = [3,7,12,24,36,42]
-shuffle(unsorted_list)
-print(unsorted_list)
+#example
+#unsorted_list = [3,7,12,24,36,42]
+#shuffle(unsorted_list)
+#print(unsorted_list)
 
 quicksort(sp_shp, 0, len(sp_shp) - 1)
 quicksort(pt_shp, 0, len(pt_shp) - 1)
