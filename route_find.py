@@ -28,57 +28,47 @@ def connect(lines,p):
 
  
 # connect(lines,1)
-# result is a 2nd network
-'''
-def grow(p,l):
-  branch=[]
-  for i in l:
-    if p[1]==i[0]:
-      row=[p,i]
-      branch.append(row)
-  return branch
+# result is a 2nd network of a transformer
 
 
-def route(lists):
-  iter=range(len(lists)-1)
-  for i in iter:
-    for j in lists[i]:
-      branch=grow (j,lists[i+1])
-      print branch
-'''
+#l is a line, lists is the line list
 
-#tier start at 0, tier = idx of t, t is tuple representing a line
-
-def neighbor(t,lists):
+def neighbor(l,lists):
   nei=[]
   for i in lists:
-    if i[0]==t[1]:
+    if i[0]==l[1]:
       nei.append(i)
   return nei
     
   
 #neighbor((1, 2),[(2, 3), (2, 12)])      
 
-tier=range(len(result)-1)
+#result1=[i for i in result]
 
-result1=[i for i in result]
+#grow the brachs(b) based on n of branchs,route the targe route the return is a list of new routes. 
+def add_route(b,route):
+  new_route=[]
+  for i in b:
+    r=[i for i in route]
+    r.append(i)
+    new_route.append(r)
+  return new_route
+  
+  
+#m is the number of branches of a tree shape 2nd network
 
-tree=[]
+nodes=[]
 
-for i in tier:
-  tree.append(result[i])
-  for t in result[i]:
-    l=result[i+1]
-    branch=neighbor(t,l)
-    bb=[]
-    for b in branch:
-      bb.append([t,b])
-    tree[i].append(bb)
-    for d in tree[i]
-      branch1=neighbor(d[1],result[i+1])
-      for e in branch: 
-        tree[i][
-      
-        
-      
+def next_node(tier,layers):
+  if tier==len(layers)-1:
+    return 
+  if tier==0:
+    nodes=layers[0]
+  for i in nodes:
+    branch=neighbor(i[-1],layers[tier+1])
+    if len(branch)==1:
+      i.append(branch[0]) 
+    if len(branch)>1:
+      nodes=add_route(branch,i)        
+  return next_node(tier+1,layers)  
   
