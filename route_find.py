@@ -49,7 +49,7 @@ def neighbor(l,lists):
 def add_route(b,route):
   new_route=[]
   for i in b:
-    r=[i for i in route]
+    r=[j for j in route]
     r.append(i)
     new_route.append(r)
   return new_route
@@ -60,6 +60,7 @@ def add_route(b,route):
 nodes=[]
 
 def next_node(tier,layers):
+  global nodes
   if tier==len(layers)-1:
     return 
   if tier==0:
