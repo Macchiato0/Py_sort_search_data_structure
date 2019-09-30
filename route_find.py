@@ -48,10 +48,10 @@ def neighbor(l,lists):
 #grow the brachs(b) based on n of branchs,route the targe route the return is a list of new routes. 
 def add_route(b,route):
   new_route=[]
-  for i in b:
-    r=[i for i in route]
-    r.append(i)
-    new_route.append(r)
+    for i in b:
+      r=[i for i in route]
+      r.append(i)
+      new_route.append(r)
   return new_route
   
   
@@ -69,6 +69,8 @@ def next_node(tier,layers):
     if len(branch)==1:
       i.append(branch[0]) 
     if len(branch)>1:
-      nodes=add_route(branch,i)        
+      new=add_route(branch,i) 
+      nodes.remove(i)
+      nodes+=new
   return next_node(tier+1,layers)  
   
