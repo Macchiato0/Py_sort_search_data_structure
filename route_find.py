@@ -22,14 +22,63 @@ def connect(lines,p):
     result.append(match)
   #print match
   for k in match:
-    result
-  for k in match:
     lines.remove(k)
   for j in match: 
     return connect(lines,j[1])
 
-  
-def route(result,p):
-  for i in result):
+ 
+# connect(lines,1)
+# result is a 2nd network
+'''
+def grow(p,l):
+  branch=[]
+  for i in l:
+    if p[1]==i[0]:
+      row=[p,i]
+      branch.append(row)
+  return branch
+
+
+def route(lists):
+  iter=range(len(lists)-1)
+  for i in iter:
+    for j in lists[i]:
+      branch=grow (j,lists[i+1])
+      print branch
+'''
+
+#tier start at 0, tier = idx of t, t is tuple representing a line
+
+def neighbor(t,lists):
+  nei=[]
+  for i in lists:
+    if i[0]==t[1]:
+      nei.append(i)
+  return nei
     
-     
+  
+#neighbor((1, 2),[(2, 3), (2, 12)])      
+
+tier=range(len(result)-1)
+
+result1=[i for i in result]
+
+tree=[]
+
+for i in tier:
+  tree.append(result[i])
+  for t in result[i]:
+    l=result[i+1]
+    branch=neighbor(t,l)
+    bb=[]
+    for b in branch:
+      bb.append([t,b])
+    tree[i].append(bb)
+    for d in tree[i]
+      branch1=neighbor(d[1],result[i+1])
+      for e in branch: 
+        tree[i][
+      
+        
+      
+  
