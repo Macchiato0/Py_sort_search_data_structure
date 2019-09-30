@@ -1,5 +1,5 @@
 #Quick sort list of [id, (x,y)] tuple based on x
-from random import randrange
+
 
 from random import randrange, shuffle 
 
@@ -43,4 +43,4 @@ def quicksort(list, start, end):
 
 quicksort(sp_shp, 0, len(sp_shp) - 1)
 quicksort(pt_shp, 0, len(pt_shp) - 1)
-quicksort(tlm_shp, 0, len(pt_shp) - 1)
+quicksort(tlm_shp, 0, len(tlm_shp) - 1)
