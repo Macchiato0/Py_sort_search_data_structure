@@ -28,21 +28,31 @@ def connect(lines,p):
     lines.remove(k)
   for j in match: 
     return connect(lines,j[1])
+    
+connect(lines,1)
 '''
 result=[]
-def connect(lines,p):
-  global result
+route=[]
+def connect(p,lines):
+  global result 
   match=[]
-  for i in lines:
-    if i[1][0]==p:
-      match.append(i)
-  if len(match)>0:    
-    result.append(match)
-  #print match
-  for k in match:
-    lines.remove(k)
-  for j in match: 
-    return connect(lines,j[1])
+  for l in lines:
+    if p==l[1][0]:
+      match.append(l)
+  if match:
+    route=match
+    for m in match:       
+      connect(m[1][1],lines)    
+      route.append(m)
+      print route
+
+      
+    
+      
+      
+      
+  
+
   
 #sec_network is a list of lists of lines. Each item in sec_network contains lines linked directly or indirectly to a transformer 
 #line1=[i for i in line_shp]
@@ -50,11 +60,16 @@ def connect(lines,p):
 sec_network=[] 
  
 for i in pt_start:
-  global result
+  p=i[0]
+  connect(line1,p)
+  print result
   result=[]
 
-connect(line1,680)
-sec_network.append(result)
+  
+line1=[i for i in line_shp]  
+
+connect(689,line1)
+
  
 # connect(lines,1)
 # result is a 2nd network of a transformer
