@@ -61,8 +61,8 @@ nodes=[]
 
 def next_node(tier,layers):
   global nodes
-  if tier==len(layers)-1:
-    return 
+  if tier>=len(layers)-1:
+    return nodes
   if tier==0:
     nodes=layers[0]
   for i in nodes:
