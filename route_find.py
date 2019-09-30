@@ -58,13 +58,13 @@ def add_route(b,route):
 #m is the number of branches of a tree shape 2nd network
 
 nodes=[]
-
+  
 def next_node(tier,layers):
   global nodes
   if tier>=len(layers)-1:
     return nodes
   if tier==0:
-    nodes=layers[0]
+    nodes.append(layers[0])
   for i in nodes:
     branch=neighbor(i[-1],layers[tier+1])
     if len(branch)==1:
@@ -74,4 +74,6 @@ def next_node(tier,layers):
       nodes.remove(i)
       nodes+=new
   return next_node(tier+1,layers)  
-  
+
+
+
