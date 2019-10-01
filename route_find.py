@@ -51,27 +51,31 @@ f=merge_branch(lll,llll)
 
 #execution of the code to get routes file
 tier_l=range(len(layers))
+nodes=[]
 for i in tier_l:
   if i==0:
     if len(layers)>2:
       l=grow_nodes(0,layers)
       ll=grow_nodes(1,layers)
       lll=merge_branch(l,ll)
+    elif len(layers)==1:
+      nodes=layers
     else:
+      l1=layers[0]
+      l2=layers[1]
       nodes=[]
-      l=grow_nodes(0,layers)
-      for m in l:
-        b=[]
-        for j in layers[i]:
-          if [k for k in m[-1] if k in m]:
-            b=m+[j]
-            nodes.append(b)
-        if not b:
-          nodes.append(m)
+      for i in l1: #i[1] is [p1,p2]
+        branch=[]
+        for j in l2: #j[1] is [p1,p2]
+          if i[0] in j or i[1] in j:
+            branch=[i,j]
+            nodes.append(branch)
+        if not branch: 
+          nodes.append(i)
   elif i <len(layers)-2:#1,2,3,4,5,6,7
     llll=grow_nodes(i+1,layers)
     lll=merge_branch(lll,llll)
-  else:
+  elif len(layers)>2:
     nodes=[]
     for m in lll:
       b=[]
