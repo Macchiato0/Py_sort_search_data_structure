@@ -11,9 +11,9 @@ def grow_nodes(n,layers):
   l1=layers[n]
   l2=layers[n+1]
   nodes=[]
-  for i in l1:
-    for j in l2:
-      if i[0] in j or i[1] in j:
+  for i in l1: #i[1] is [p1,p2]
+    for j in l2: #j[1] is [p1,p2]
+      if i[1][0] in j[1] or i[1][1] in j[1]:
         branch=[i,j]
         nodes.append(branch)
   return nodes 
@@ -53,9 +53,21 @@ f=merge_branch(lll,llll)
 tier_l=range(len(layers))
 for i in tier_l:
   if i==0:
-    l=grow_nodes(0,layers)
-    ll=grow_nodes(1,layers)
-    lll=merge_branch(l,ll)
+    if len(layers)>2:
+      l=grow_nodes(0,layers)
+      ll=grow_nodes(1,layers)
+      lll=merge_branch(l,ll)
+    else:
+      nodes=[]
+      l=grow_nodes(0,layers)
+      for m in l:
+        b=[]
+        for j in layers[i]:
+          if [k for k in m[-1] if k in m]:
+            b=m+[j]
+            nodes.append(b)
+        if not b:
+          nodes.append(m)
   elif i <len(layers)-2:#1,2,3,4,5,6,7
     llll=grow_nodes(i+1,layers)
     lll=merge_branch(lll,llll)
