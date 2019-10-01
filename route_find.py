@@ -31,7 +31,7 @@ def connect(lines,p):
     
 connect(lines,1)
 '''
-lines=[i for i in line_shp]
+#lines=[i for i in line_shp]
 result=[]
 def connect(*args):
   match=[]
@@ -52,16 +52,9 @@ def connect(*args):
 
       
 #connect(194)
-      
-    
-      
-      
-      
-  
-
   
 #sec_network is a list of lists of lines. Each item in sec_network contains lines linked directly or indirectly to a transformer 
-#lines=[i for i in line_shp]
+
 #lines=[(i[1][0],i[1][1]) for i in line_shp]
 
 sec_network=[] 
@@ -79,11 +72,11 @@ for t in pt_start:
 #l is a line, lists is the line list
 
 def neighbor(l,lists):
-  nei=[]
+  near=[]
   for i in lists:
-    if i[0]==l[1]:
-      nei.append(i)
-  return nei
+    if l[0] in i or l[1] in i:
+      near.append(i)
+  return near
     
   
 #neighbor((1, 2),[(2, 3), (2, 12)])      
@@ -91,6 +84,7 @@ def neighbor(l,lists):
 #result1=[i for i in result]
 
 #grow the brachs(b) based on n of branchs,route the targe route the return is a list of new routes. 
+
 def add_route(b,route):
   new_route=[]
   for i in b:
@@ -121,4 +115,8 @@ def next_node(tier,layers):
   return next_node(tier+1,layers)  
 
 
+next_node(0,layers)
 
+'''
+
+layers=[[(1,2),(1,3),(1,4)],[(2,12),(6,4),(7,3),(3,5)],[(7, 8), (9, 7)],[(8,100),(9,11)],[(100,101)],[(102,101),(103,101)],[(103,14)],[(14,15),(16,14),(14,17)],[(16,21),(17,25)],[(25,33),(26,25)]]
