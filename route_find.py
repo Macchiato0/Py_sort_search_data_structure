@@ -69,7 +69,7 @@ lines=[i for i in line_shp]
 for t in pt_start:
   p=t[0]
   connect(p)
-  print result
+  sec_network.append(result)
   result=[]
 
   
