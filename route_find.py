@@ -133,14 +133,15 @@ for i in sec_network:
 #basic structure [route_id,lines,pts,length]
   
 id_n=0
-for i in sec_rout[:8]:#i is a secondary network fed by a transformer 
+for i in sec_rout:#i is a secondary network fed by a transformer 
   for j in i: #j is a route from a transformer to the end of the network
     a=[k[0] for k in j]
     b=[k[1] for k in j]
-    for p in range(len(b)):
-      if 
-      
-    print a,b
+    for p in range(len(b)-1):
+      if b[p][1]!=b[p+1][0]:
+        b[p+1][0],b[p+1][1]=b[p+1][1],b[p+1][0]
+    c=[k[0] for k in b]+[b[-1][1]]    
+    print a,b,c
 
     
 
