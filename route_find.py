@@ -31,20 +31,20 @@ def connect(lines,p):
     
 connect(lines,1)
 '''
-lines=[(i[1][0],i[1][1]) for i in line_shp]
+lines=[i for i in line_shp]
 result=[]
 def connect(*args):
   match=[]
   global lines
   global result
   for i in lines:
-    if i[0] in args:
+    if i[1][0] in args:
       match.append(i)
   if len(match)>0: 
     result.append(match)
     for k in match:
       lines.remove(k)
-    p=[k[1] for k in match]
+    p=[k[1][1] for k in match]
     args=tuple(p)
     print args
     return connect(*args)
