@@ -113,12 +113,13 @@ def route_find(layers):
   return nodes 
 '''
 #test
->>> f=route_find(layers)
->>> for i in f:
-...     print [j[1] for j in i]
+r_l=route_find(layers)
+for i in r_l:
+    print [j[1] for j in i]
 '''
 #execute
-for i
+for i sec_network:
+  r_l=route_find(i)
 
 
 
