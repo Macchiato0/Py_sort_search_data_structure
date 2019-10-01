@@ -8,7 +8,7 @@ pt_start=[i for i in pt_shp if 'tlm' in i]
 '''
 #basic algorithm and data structure of function connect
 
-lines=[(1,2),(2,3),(3,4),(3,5),(2,12),(4,6),(6,7),(7,8),(8,100),(100,101),(10,11)]
+lines=[(1,2),(2,3),(3,4),(2,12),(4,6),(6,7),(3,5),(7,8),(8,100),(100,101),(10,11)]
 p=[1,10]
 
 lines1=[i for i in lines]
@@ -31,21 +31,26 @@ def connect(lines,p):
     
 connect(lines,1)
 '''
+lines=[(i[1][0],i[1][1]) for i in line_shp]
 result=[]
-route=[]
-def connect(p,lines):
-  global result 
+def connect(*args):
   match=[]
-  for l in lines:
-    if p==l[1][0]:
-      match.append(l)
-  if match:
-    route=match
-    for m in match:       
-      connect(m[1][1],lines)    
-      route.append(m)
-      print route
-
+  global lines
+  global result
+  for i in lines:
+    if i[0] in args:
+      match.append(i)
+  if len(match)>0: 
+    result.append(match)
+    for k in match:
+      lines.remove(k)
+    p=[k[1] for k in match]
+    args=tuple(p)
+    print args
+    return connect(*args)
+  #print match
+      
+connect(5)
       
     
       
@@ -55,7 +60,8 @@ def connect(p,lines):
 
   
 #sec_network is a list of lists of lines. Each item in sec_network contains lines linked directly or indirectly to a transformer 
-#line1=[i for i in line_shp]
+#lines=[i for i in line_shp]
+#lines=[(i[1][0],i[1][1]) for i in line_shp]
 
 sec_network=[] 
  
