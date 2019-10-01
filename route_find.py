@@ -84,8 +84,10 @@ def route_find(layers):
         ll=grow_nodes(1,layers)
         lll=merge_branch(l,ll)
       elif len(layers)==1:
-        nodes=layers[0]
+        nodes=layers
       else:
+        nodes=grow_nodes(0,layers)
+        '''
         l1=layers[0]
         l2=layers[1]
         nodes=[]
@@ -94,9 +96,11 @@ def route_find(layers):
           for j in l2: #j[1] is [p1,p2]
             if i[0] in j or i[1] in j:
               branch=[i,j]
+              print branch
               nodes.append(branch)
           if not branch: 
             nodes.append(i)
+            '''
     elif i <len(layers)-2:#1,2,3,4,5,6,7
       llll=grow_nodes(i+1,layers)
       lll=merge_branch(lll,llll)
@@ -129,9 +133,14 @@ for i in sec_network:
 #basic structure [route_id,lines,pts,length]
   
 id_n=0
-for i in sec_rout[:3]:#i is a secondary network fed by a transformer 
+for i in sec_rout[:8]:#i is a secondary network fed by a transformer 
   for j in i: #j is a route from a transformer to the end of the network
-    print j
+    a=[k[0] for k in j]
+    b=[k[1] for k in j]
+    for p in range(len(b)):
+      if 
+      
+    print a,b
 
     
 
