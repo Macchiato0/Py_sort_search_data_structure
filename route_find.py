@@ -140,10 +140,29 @@ for i in sec_rout:#i is a secondary network fed by a transformer
     for p in range(len(b)-1):
       if b[p][1]!=b[p+1][0]:
         b[p+1][0],b[p+1][1]=b[p+1][1],b[p+1][0]
-    c=[k[0] for k in b]+[b[-1][1]]    
-    print a,b,c
+    c=[k[0] for k in b]+[b[-1][1]]
+    feet=sum([k[-1] for k in j])
+    id_n+=1
+    print id_n,a,c,feet
 
     
+file_name='E:\\Data\\yfan\\tlm_sec\\route_{}.csv'.format(fid)
+id_n=0
+import csv 
+with open(file_name, 'wb') as csvfile:
+    filewriter = csv.writer(csvfile,delimiter=',',quoting=csv.QUOTE_MINIMAL)
+    for i in sec_rout:#i is a secondary network fed by a transformer 
+      for j in i: #j is a route from a transformer to the end of the network
+        a=[k[0] for k in j]
+        b=[k[1] for k in j]
+        for p in range(len(b)-1):
+          if b[p][1]!=b[p+1][0]:
+            b[p+1][0],b[p+1][1]=b[p+1][1],b[p+1][0]
+        c=[k[0] for k in b]+[b[-1][1]]
+        feet=sum([k[-1] for k in j])
+        id_n+=1
+        row=[id_n,str(a),str(c),feet]
+        filewriter.writerow(row)    
 
 
 
