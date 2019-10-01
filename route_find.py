@@ -165,9 +165,28 @@ with open(file_name, 'wb') as csvfile:
         filewriter.writerow(row)    
 
 
+file_name='E:\\Data\\yfan\\tlm_sec\\pt_{}.csv'.format(fid)
+import csv 
+with open(file_name, 'wb') as csvfile:
+    filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
+    for i in pt_shp:
+        x=i[1][0]
+        y=i[1][1]
+        row=[i[0],x,y]
+        if len(i)<=2:
+          filewriter.writerow(row)
+        else:
+          row=[i[0],x,y,i[2],"'{}'".format(i[3])] 
+          filewriter.writerow(row)
 
-
-  
+file_name='E:\\Data\\yfan\\tlm_sec\\line_{}.csv'.format(fid)
+import csv 
+with open(file_name, 'wb') as csvfile:
+    filewriter = csv.writer(csvfile,delimiter=',',quoting=csv.QUOTE_MINIMAL)
+    for i in line_shp:
+        row=i
+        filewriter.writerow(row)    
+      
   
 '''
 #execution of the code to get routes file
