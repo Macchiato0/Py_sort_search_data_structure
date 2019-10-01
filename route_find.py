@@ -38,19 +38,20 @@ def connect(*args):
   global lines
   global result
   for i in lines:
-    if i[1][0] in args:
+    if i[1][0] in args or i[1][1] in args:
       match.append(i)
   if len(match)>0: 
     result.append(match)
     for k in match:
       lines.remove(k)
-    p=[k[1][1] for k in match]
-    args=tuple(p)
-    print args
+    p1=[k[1][1] for k in match]
+    p2=[k[1][0] for k in match]
+    args=tuple(p1+p2)
+    #print args
     return connect(*args)
-  #print match
+
       
-connect(5)
+#connect(194)
       
     
       
@@ -64,20 +65,14 @@ connect(5)
 #lines=[(i[1][0],i[1][1]) for i in line_shp]
 
 sec_network=[] 
- 
-for i in pt_start:
-  p=i[0]
-  connect(line1,p)
+lines=[i for i in line_shp] 
+for t in pt_start:
+  p=t[0]
+  connect(p)
   print result
   result=[]
 
   
-line1=[i for i in line_shp]  
-
-connect(689,line1)
-
- 
-# connect(lines,1)
 # result is a 2nd network of a transformer
 
 
