@@ -84,7 +84,7 @@ def route_find(layers):
         ll=grow_nodes(1,layers)
         lll=merge_branch(l,ll)
       elif len(layers)==1:
-        nodes=layers
+        nodes=layers[0]
       else:
         l1=layers[0]
         l2=layers[1]
@@ -118,11 +118,28 @@ for i in r_l:
     print [j[1] for j in i]
 '''
 #execute
-for i sec_network:
+sec_rout=[]
+
+for i in sec_network:
   r_l=route_find(i)
+  sec_rout.append(r_l)
+
+
+#create data for route file
+#basic structure [route_id,lines,pts,length]
+  
+id_n=0
+for i in sec_rout[:3]:#i is a secondary network fed by a transformer 
+  for j in i: #j is a route from a transformer to the end of the network
+    print j
+
+    
 
 
 
+
+  
+  
 '''
 #execution of the code to get routes file
 #wrap the following code in function route_find
