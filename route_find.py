@@ -135,7 +135,7 @@ for i in sec_rout:#i is a secondary network fed by a transformer
     feet=sum([k[-1] for k in j])
     id_n+=1
     print id_n,a,c,feet
-'''
+
 
 #add tlm to every route 
 for i in sec_rout:
@@ -145,8 +145,8 @@ for i in sec_rout:
             if s[0]==t_p:
                 j.append(s[3])
                 
-                
-file_name='E:\\Data\\yfan\\tlm_sec\\route_{}.csv'.format(fid)
+'''                
+file_name='E:\\Data\\yfan\\tlm_sec\\101route_{}.csv'.format(fid)
 id_n=0
 import csv 
 with open(file_name, 'wb') as csvfile:
@@ -160,13 +160,19 @@ with open(file_name, 'wb') as csvfile:
             b[p+1][0],b[p+1][1]=b[p+1][1],b[p+1][0]
         c=[k[0] for k in b]+[b[-1][1]]
         feet=sum([k[-1] for k in j])
-        #tl="'{}'".format(j[-1])
+        tlm_p=j[0][1][0]
+        for s_tlm in pt_start: 
+          if s_tlm[0]==tlm_p:
+            w_tlm=s_tlm[3]
+        #tl="'{}'".format(w_tlm)
+        #print w_tlm
         id_n+=1
-        row=[id_n,str(a),str(c),feet]
+        row=[id_n,str(a),str(c),feet,"'{}'".format(w_tlm)]
         filewriter.writerow(row)    
 
 
-file_name='E:\\Data\\yfan\\tlm_sec\\pt_{}.csv'.format(fid)
+
+file_name='E:\\Data\\yfan\\tlm_sec\\101pt_{}.csv'.format(fid)
 import csv 
 with open(file_name, 'wb') as csvfile:
     filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
@@ -181,7 +187,7 @@ with open(file_name, 'wb') as csvfile:
           filewriter.writerow(row)
 
           
-file_name='E:\\Data\\yfan\\tlm_sec\\line_{}.csv'.format(fid)
+file_name='E:\\Data\\yfan\\tlm_sec\\101line_{}.csv'.format(fid)
 import csv 
 with open(file_name, 'wb') as csvfile:
     filewriter = csv.writer(csvfile,delimiter=',',quoting=csv.QUOTE_MINIMAL)
