@@ -5,7 +5,9 @@ pt_start=[i for i in pt_shp if 'tlm' in i]
 #data structure of route
 #rout [id,(line1,line2,line3),(point1,point2,point3)]
 
-#connect function seperate lines in tiers
+#connect function sort linked lines into tiers
+lines=[i for i in line_shp]
+
 result=[]
 def connect(*args):
   match=[]
@@ -31,8 +33,10 @@ for t in pt_start:
   connect(p)
   sec_network.append(result)
   result=[]  
-
+  
+#the leftover items in lines are isolated lines
 #grow function to identify the linked lines
+
 def grow_nodes(n,layers):
   l1=layers[n]
   l2=layers[n+1]
