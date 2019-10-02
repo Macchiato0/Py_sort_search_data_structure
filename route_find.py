@@ -37,6 +37,7 @@ for t in pt_start:
 #the leftover items in lines are isolated lines
 #grow function to identify the linked lines
 
+
 def grow_nodes(n,layers):
   l1=layers[n]
   l2=layers[n+1]
@@ -91,20 +92,6 @@ def route_find(layers):
         nodes=layers
       else:
         nodes=grow_nodes(0,layers)
-        '''
-        l1=layers[0]
-        l2=layers[1]
-        nodes=[]
-        for i in l1: #i[1] is [p1,p2]
-          branch=[]
-          for j in l2: #j[1] is [p1,p2]
-            if i[0] in j or i[1] in j:
-              branch=[i,j]
-              print branch
-              nodes.append(branch)
-          if not branch: 
-            nodes.append(i)
-            '''
     elif i <len(layers)-2:#1,2,3,4,5,6,7
       llll=grow_nodes(i+1,layers)
       lll=merge_branch(lll,llll)
@@ -135,7 +122,7 @@ for i in sec_network:
 
 #create data for route file
 #basic structure [route_id,lines,pts,length]
-  
+'''  
 id_n=0
 for i in sec_rout:#i is a secondary network fed by a transformer 
   for j in i: #j is a route from a transformer to the end of the network
@@ -148,13 +135,22 @@ for i in sec_rout:#i is a secondary network fed by a transformer
     feet=sum([k[-1] for k in j])
     id_n+=1
     print id_n,a,c,feet
+'''
 
-    
+#add tlm to every route 
+for i in sec_rout:
+    for j in i:
+        t_p=j[0][1][0]
+        for s in pt_start:
+            if s[0]==t_p:
+                j.append(s[3])
+                
+                
 file_name='E:\\Data\\yfan\\tlm_sec\\route_{}.csv'.format(fid)
 id_n=0
 import csv 
 with open(file_name, 'wb') as csvfile:
-    filewriter = csv.writer(csvfile,delimiter=',',quoting=csv.QUOTE_MINIMAL)
+    filewriter = csv.writer(csvfile,delimiter=',',quotechar='"',quoting=csv.QUOTE_MINIMAL)
     for i in sec_rout:#i is a secondary network fed by a transformer 
       for j in i: #j is a route from a transformer to the end of the network
         a=[k[0] for k in j]
@@ -164,6 +160,7 @@ with open(file_name, 'wb') as csvfile:
             b[p+1][0],b[p+1][1]=b[p+1][1],b[p+1][0]
         c=[k[0] for k in b]+[b[-1][1]]
         feet=sum([k[-1] for k in j])
+        #tl="'{}'".format(j[-1])
         id_n+=1
         row=[id_n,str(a),str(c),feet]
         filewriter.writerow(row)    
@@ -183,6 +180,7 @@ with open(file_name, 'wb') as csvfile:
           row=[i[0],x,y,i[2],"'{}'".format(i[3])] 
           filewriter.writerow(row)
 
+          
 file_name='E:\\Data\\yfan\\tlm_sec\\line_{}.csv'.format(fid)
 import csv 
 with open(file_name, 'wb') as csvfile:
@@ -192,45 +190,6 @@ with open(file_name, 'wb') as csvfile:
         filewriter.writerow(row)    
       
   
-'''
-#execution of the code to get routes file
-#wrap the following code in function route_find
-tier_l=range(len(layers))
-nodes=[]
-for i in tier_l:
-  if i==0:
-    if len(layers)>2:
-      l=grow_nodes(0,layers)
-      ll=grow_nodes(1,layers)
-      lll=merge_branch(l,ll)
-    elif len(layers)==1:
-      nodes=layers
-    else:
-      l1=layers[0]
-      l2=layers[1]
-      nodes=[]
-      for i in l1: #i[1] is [p1,p2]
-        branch=[]
-        for j in l2: #j[1] is [p1,p2]
-          if i[0] in j or i[1] in j:
-            branch=[i,j]
-            nodes.append(branch)
-        if not branch: 
-          nodes.append(i)
-  elif i <len(layers)-2:#1,2,3,4,5,6,7
-    llll=grow_nodes(i+1,layers)
-    lll=merge_branch(lll,llll)
-  elif len(layers)>2:
-    nodes=[]
-    for m in lll:
-      b=[]
-      for j in layers[i]:
-        if [k for k in m[-1] if k in m]:
-          b=m+[j]
-          nodes.append(b)
-      if not b:
-        nodes.append(m)
- 
 '''
 #example data structure
 layers=[[(1,2),(1,3),(1,4)],[(2,12),(6,4),(7,3),(3,5)],[(7, 8), (9, 7)],[(8,100),(9,11)],[(100,101)],[(102,101),(103,101)],[(103,14)],[(14,15),(16,14),(14,17)],[(16,21),(17,25)],[(25,33),(26,25)]]
