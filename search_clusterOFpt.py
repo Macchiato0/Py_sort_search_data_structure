@@ -77,10 +77,21 @@ def create_network(lines,*shps):# * make a single item iterable
 * make a list iterable 
 * arg needs placed as the last argument in a function
 '''
+def search_tlm(line,tlm_list):
+  for i in tlm_list:
+    if line.distanceTo(i[0])==0:
+      return i[1]
+
+sp_tlm=[]
 for i in sp:
   network=[] 
   create_network(all_line,i[1])
-  print i[0],len(network) 
+  for j in network:
+    t=search_tlm(j,trans)
+    if t:
+      break
+  s_t=[i[0],t] 
+  sp_tlm.append(s_t)
   
 
       
