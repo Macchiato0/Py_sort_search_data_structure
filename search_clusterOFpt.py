@@ -87,12 +87,13 @@ for i in sp:
   network=[] 
   create_network(all_line,i[1])
   for j in network:
-    t=search_tlm(j,trans)
+    t=search_tlm(j,trans)    
     if t:
-      break
+      print t,i[0]
+      continue
   s_t=[i[0],t] 
   sp_tlm.append(s_t)
-  
+  s_t=[]
 
   
 workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
@@ -108,3 +109,20 @@ for i in sp_tlm:
 edit.stopOperation()
 
 
+'''
+[[2196087, u'1107364404'], [4156584, u'1106313209'], [4156590, u'1106313302'], [4156591, u'1106073203'], [4156597, u'1107131101'], [4156601, u'1106302201'], [4156606, u'1106282202'], [4156611, u'1107364403'], [4156612, u'1007021301'], [4156613, u'1107364414'], [4156623, u'1106313210'], [4156637, u'1107364342'], [4156638, u'1107364103'], [4156642, u'1106313301'], [4156583, u'1107363406'], [3388115, u'1107363406'], [4156346, u'1106303307'], [4156348, u'1106303307'], [4156349, u'1007011205'], [4156604, u'1107363404']]
+'''
+move_a2b(a,b)
+
+#Function to move point A to point B based on oid, a an b are oid of points.
+#point A is remove/delet
+#point B is null Devicelocation
+
+for i in sp_tlm:
+  w="TLM ='{}' and CONSTRUCTIONSTATUS=55".format(i[1])
+  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@"],w)
+    print [i[0] for i in cursor]
+  
+
+  
+  
