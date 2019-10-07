@@ -21,14 +21,25 @@ all_line=SecOH+SecUG
 #all_l=[i for i in all_line]
 #shapes=sp[0][1]
 
+def dist(geo1,geo2):
+  p1=[geo2.firstPoint,geo2.lastPoint]
+  result=0
+  for i in p1:
+      if geo1.distanceTo(i)==0:
+        result+=1
+  return result
+    
+    
+#find one and delet one
 def find_near(geo,lines):#geo is a line or point
   result=[]
   for j in lines:
-    if geo.distanceTo(j)==0: 
+    if j.>0: 
       result.append(j)
       lines.remove(j)
   return result
-    
+
+#find_near(shapes,all_line)
 '''
 pseudo-code
 
@@ -58,10 +69,19 @@ def create_network(lines,*shps):# * make a single item iterable
       return network
     create_network(lines,*sub)# * make sub (i.e. list) iterable 
     
-    
+#network=[]     
 #create_network(all_line,shapes)
 #all_line=[i for i in all_l]
 '''
 * make a single or multiple single item iterable
 * make a list iterable 
 * arg needs placed as the last argument in a function
+'''
+for i in sp:
+  network=[] 
+  create_network(all_line,i[1])
+  print i[0],len(network) 
+  
+
+      
+  
