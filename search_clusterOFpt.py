@@ -94,5 +94,17 @@ for i in sp:
   sp_tlm.append(s_t)
   
 
-      
   
+workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
+edit = arcpy.da.Editor(workspace)
+edit.startEditing(False, True)
+edit.startOperation() 
+for i in sp_tlm:    
+  where="OBJECTID={}".format(i[0])
+  cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["TLM"],where)
+  for row in cursor:
+    row[0]=str(i[1])
+    cursor.updateRow(row)
+edit.stopOperation()
+
+
