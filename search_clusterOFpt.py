@@ -21,13 +21,13 @@ all_line=SecOH+SecUG
 #all_l=[i for i in all_line]
 #shapes=sp[0][1]
 
-def find_near(shp,lines):
+def find_near(geo,lines):#geo is a line or point
   result=[]
   for j in lines:
-    if shp.distanceTo(j)==0: 
+    if geo.distanceTo(j)==0: 
       result.append(j)
       lines.remove(j)
-      return result
+  return result
     
 '''
 pseudo-code
