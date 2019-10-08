@@ -18,7 +18,7 @@ SecUG=[i[0] for i in cursor]
 
 all_line=SecOH+SecUG
 
-#all_l=[i for i in all_line]
+all_l=[i for i in all_line]
 #shapes=sp[0][1]
 
 def dist(geo1,geo2):
@@ -79,24 +79,27 @@ def create_network(lines,*shps):# * make a single item iterable
 * make a list iterable 
 * arg needs placed as the last argument in a function
 '''
-def search_tlm(line,tlm_list):
+def search_tlm(line_list,tlm_list):
   for i in tlm_list:
-    if line.distanceTo(i[0])==0:
-      return i[1]
+    for l in line_list:
+      if i[0].distanceTo(l)==0:
+        return i[1]
 
 
 sp_tlm=[]
 for i in sp:
   network=[] 
+  all_line=[a_l for a_l in all_l]
   create_network(all_line,i[1])
-  for j in network:
-    t=search_tlm(j,trans)
-    if t:
-      break
+  print len(network), i[0]
+  t=search_tlm(network,trans)
+  if not t:
+      print i[0], "N"
+      continue #continue can skip over the part of a loop where an external condition is triggered
   s_t=[i[0],t] 
   sp_tlm.append(s_t)
-  s_t=[]
-  del t
+  
+  
 
   
 workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
