@@ -28,13 +28,15 @@ def dist(geo1,geo2):
       if geo1.distanceTo(i)==0:
         result+=1
   return result
-    
+#return 0 if not connected
+#arcpy distancTo return distance between crossed lines as 0. 
+#linked lines has 0 distance between line A and points on line B
     
 #find one and delet one
 def find_near(geo,lines):#geo is a line or point
   result=[]
   for j in lines:
-    if j.>0: 
+    if dist(geo,j)>0: 
       result.append(j)
       lines.remove(j)
   return result
@@ -82,18 +84,19 @@ def search_tlm(line,tlm_list):
     if line.distanceTo(i[0])==0:
       return i[1]
 
+
 sp_tlm=[]
 for i in sp:
   network=[] 
   create_network(all_line,i[1])
   for j in network:
-    t=search_tlm(j,trans)    
+    t=search_tlm(j,trans)
     if t:
-      print t,i[0]
-      continue
+      break
   s_t=[i[0],t] 
   sp_tlm.append(s_t)
   s_t=[]
+  del t
 
   
 workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
