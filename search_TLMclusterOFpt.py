@@ -1,5 +1,5 @@
 #collect data of lines and pts
-fid='092101'
+fid='092102'
 
 where="feederid='{}'".format(fid)
 
@@ -99,36 +99,56 @@ for i in sp:
   s_t=[i[0],t] 
   sp_tlm.append(s_t)
   
-  
-
-  
+    
 workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
 edit = arcpy.da.Editor(workspace)
 edit.startEditing(False, True)
 edit.startOperation() 
 for i in sp_tlm:    
-  where="OBJECTID={}".format(i[0])
-  cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["TLM"],where)
+  where1="OBJECTID={}".format(i[0])
+  cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["TLM"],where1)
   for row in cursor:
     row[0]=str(i[1])
     cursor.updateRow(row)
 edit.stopOperation()
 
-#import move_a2b(a,b)
 
-#Function to move point A to point B based on oid, a an b are oid of points.
-#point A is remove/delet
-#point B is null Devicelocation
-a_list=[]
-for i in sp_tlm:
-  where="TLM ='{}' and CONSTRUCTIONSTATUS=55".format(i[1])
-  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@"],where+" and CONSTRUCTIONSTATUS = 55")
+# import move_a2b(a,b)
+# Function to move point A to point B based on oid, a an b are oid of points.
+# Point A is remove/delet
+# Point B is null Devicelocation
+# If tlm of spA without devicelocation == tlm of spB remove/deleted ==> move(sp.A, sp.B)
+# If len(spA) or len(spB) > 0 ==> create a for loop
+'''
+create spA, create spB
+    
+for i in len[spA]:
+  if spB[i]:
+    move(spA[i],spB[i])  
+    
+'''
+cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","TLM"],where+" and DEVICELOCATION is Null")
+
+sp_tlm=[list(i) for i in cursor]
+
+tlm_list= list(set([i[1] for i in sp_tlm]))
+del_sp=[]
+moved_sp=[]
+for i in tlm_list:
+  where2="TLM ='{}' and CONSTRUCTIONSTATUS=55".format(i)
+  cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@"],where2+" and CONSTRUCTIONSTATUS = 55")
   list_a=[p[0] for p in cursor]
-  if len(list_a)==1:#match one to one
-    move(list_a[0],i[0])
-  if len(list_a)>1:
-    a=[aa for aa in list_a if aa not in a_list]
-    move(a[0],i[0])
-
+  list_b=[b[0] for b in sp_tlm if b[1]==i]       
+  if list_a and list_b:
+    for n in range(len(list_a)):
+      if n<len(list_b):
+        move_a2b(list_a[n],list_b[n])
+        del_sp.append(list_b[n])
+        moved_sp.append(list_a[n])        
+print "del_added: {}".format(del_sp)      
+print "moved_sp: {}".format(moved_sp)      
+        
   
+# Solve the sp on the inconsistant tlm  
+
   
