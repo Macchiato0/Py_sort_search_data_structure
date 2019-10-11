@@ -1,7 +1,9 @@
 #collect data of lines and pts
-fid='092102'
+fid="('110801','110802','110803')"
+'''
+'''
 
-where="feederid='{}'".format(fid)
+where="feederid in {}".format(fid)
 
 cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","SHAPE@"],where+" and DEVICELOCATION is Null")
 sp=[[i[0],i[1]] for i  in cursor]
@@ -112,6 +114,7 @@ for i in sp_tlm:
     cursor.updateRow(row)
 edit.stopOperation()
 
+[i[0] for i in sp_tlm]
 
 # import move_a2b(a,b)
 # Function to move point A to point B based on oid, a an b are oid of points.
