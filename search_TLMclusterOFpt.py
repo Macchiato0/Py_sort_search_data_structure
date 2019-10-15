@@ -1,5 +1,6 @@
 #collect data of lines and pts
 fid="('110801','110802','110803')"
+fid="('115301','115302','135901','135903','135904','135905')"
 '''
 '''
 
@@ -100,8 +101,8 @@ for i in sp:
       continue #continue can skip over the part of a loop where an external condition is triggered
   s_t=[i[0],t] 
   sp_tlm.append(s_t)
-  
-    
+         
+         
 workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
 edit = arcpy.da.Editor(workspace)
 edit.startEditing(False, True)
