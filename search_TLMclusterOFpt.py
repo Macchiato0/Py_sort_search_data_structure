@@ -1,6 +1,6 @@
 #collect data of lines and pts
 
-fid="('031201','031202')"
+fid="('155001','155002')"
 '''
 '''
 
