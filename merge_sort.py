@@ -29,3 +29,5 @@ def mergeSort(arr):
             arr[k] = R[j] 
             j+=1
             k+=1
+
+ # recursion happens when len(arr) not > 1
