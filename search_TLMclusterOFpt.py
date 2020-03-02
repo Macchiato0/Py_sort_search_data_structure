@@ -6,7 +6,7 @@
 
 
 
-fid="('032101')"
+fid="('032102','032103')"
 
 '''
 '''
@@ -146,7 +146,7 @@ tlm_list= list(set([i[1] for i in sp_tlm]))
 del_sp=[]
 moved_sp=[]
 for i in tlm_list:
-  where2="TLM ='{}' and CONSTRUCTIONSTATUS=55".format(i)
+  where2="TLM ='{}' and CONSTRUCTIONSTATUS=55 and FEEDERINFO=8".format(i)
   cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@"],where2+" and CONSTRUCTIONSTATUS = 55")
   list_a=[p[0] for p in cursor]
   list_b=[b[0] for b in sp_tlm if b[1]==i]       
