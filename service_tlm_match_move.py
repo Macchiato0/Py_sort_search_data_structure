@@ -112,3 +112,84 @@ def bsf_sec_network(start_points,gr,sp_n,points):
         sec_ne[start_points[key]]=rout
     return sec_ne,directed_g,revers_g,sp_tl
     
+def update_tlm(s_t):
+    workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
+    edit = arcpy.da.Editor(workspace)
+    edit.startEditing(False, True)
+    edit.startOperation() 
+    for key in s_t:    
+        where1="OBJECTID={}".format(key)
+        cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["TLM"],where1)
+        for row in cursor:
+            row[0]=str(s_t[key])
+            cursor.updateRow(row)
+    edit.stopOperation()
+
+def move_a2b(a,b):
+    workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
+    edit = arcpy.da.Editor(workspace)
+    edit.startEditing(False, True)
+    edit.startOperation()
+    where="OBJECTID={}".format(b)
+    cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["SHAPE@"],where)
+    for row in cursor:
+        pt=row[0]
+    where="OBJECTID={}".format(a)
+    cursor=arcpy.da.UpdateCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["SHAPE@"],where)
+    for row in cursor:
+        row[0]=pt
+        cursor.updateRow(row)
+    edit.stopOperation()
+
+def move(s_t):
+    del_sp=[]
+    moved_sp=[]
+    tlm_sp=dict([[s_t[key],[]] for key in s_t])
+    for key in s_t:
+        tlm_sp[s_t[key]].append(key)
+    for key in tlm_sp:
+        where2="TLM ='{}'".format(key)
+        cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@"],where2+"and CONSTRUCTIONSTATUS = 55")
+        list_a=[p[0] for p in cursor]         
+        while len(list_a)>0 and len(tlm_sp[key])>0:
+            p1=list_a.pop()
+            p2=tlm_sp[key].pop()
+            #print p1,p2
+            moved_sp.append(p1)
+            del_sp.append(p2)
+            move_a2b(p1,p2)          
+    print "del_added: {}".format(del_sp)      
+    print "moved_sp: {}".format(moved_sp)  
+    print "delete null=", len(del_sp)  
+    print "moved removed sp=", len(moved_sp)    
+    
+def main(fid):
+    sp_null,trans,all_l=extract_data(fid)  
+    pts,edges=get_pt(all_l)
+    pts_list=pts.items()#1s
+    pts_list.sort(key=lambda r:r[1][0])#sort based on x value,1s
+
+    trans.sort(key=lambda r:r[1][0])
+
+    trans_pts=convert_tlm(trans,pts_list) 
+    print "transformers: ",len(trans_pts)
+    sp_null_pts=convert_sp(sp_null,pts_list)
+    print "null service points: ",len(sp_null_pts)
+
+    undirected_graph={}
+    for key in pts:
+        undirected_graph[key]=[]
+    for i in edges:
+        if i[1] not in undirected_graph[i[0]]:
+            undirected_graph[i[0]].append(i[1])
+        if i[0] not in undirected_graph[i[1]]:
+            undirected_graph[i[1]].append(i[0]) 
+ 
+    print "undirected_graph: ",len(undirected_graph)   
+
+    sec_net,directed_gr,revers_gr,sp_tlm=bsf_sec_network(trans_pts,undirected_graph,sp_null_pts,pts)
+    print sp_tlm
+    update_tlm(sp_tlm)
+    move(sp_tlm)
+    
+    
