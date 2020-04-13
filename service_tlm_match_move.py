@@ -1,3 +1,6 @@
+import functools 
+import copy
+
 def extract_data(fid):
     where="feederid in {}".format(fid)
     cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","SHAPE@"],where+" and     DEVICELOCATION is Null")
