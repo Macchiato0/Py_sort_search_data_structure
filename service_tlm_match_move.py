@@ -1,10 +1,37 @@
 import sys
 sys.path.append('E:\\Data\\yfan\\PyModules')
 import removed_to_added_sp
-import functools 
-import copy
+
+# update added sp with tlm and swap added sp with removed/deleted sp
+
+
+# -*- coding: utf-8 -*-
+
+# ---------------------------------------------------------------------------
+
+# removed_to_added_sp.py
+
+# Created on: 2020-04-05 13:29
+
+# (Author by Yi Fan)
+
+# Description: 
+
+# Move removed servive point to added service point with same tlm based on feederid
+
+# ---------------------------------------------------------------------------
+
+
+
+# Import arcpy module
+
+
+
+
+
 
 def extract_data(fid):
+    import arcpy
     where="feederid in {}".format(fid)
     cursor=arcpy.da.SearchCursor(r'E:\Data\yfan\Connection to dgsep011.sde\ELECDIST.ElectricDist\ELECDIST.ServicePoint',["OID@","SHAPE@"],where+" and     DEVICELOCATION is Null")
     sp_result=[[i[0],(i[1].firstPoint.X,i[1].firstPoint.Y)] for i  in cursor]
@@ -19,6 +46,7 @@ def extract_data(fid):
     return sp_result,trans_result,sec_lines
 
 def get_pt(edges):
+    import functools 
     lines=[]
     p_s=list(set([functools.reduce(lambda x,y:x+y,edges)][0]))
     print 'number of points: ',len(p_s)
@@ -93,6 +121,7 @@ def convert_sp(sps,pts_list):
     
     
 def bsf_sec_network(start_points,gr,sp_n,points):
+    import copy
     directed_g=copy.deepcopy(gr)
     revers_g = dict([(key,0) for key in points])
     sp_tl={}
@@ -119,6 +148,7 @@ def bsf_sec_network(start_points,gr,sp_n,points):
     return sec_ne,directed_g,revers_g,sp_tl
     
 def update_tlm(s_t):
+    import arcpy
     workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
     edit = arcpy.da.Editor(workspace)
     edit.startEditing(False, True)
@@ -132,6 +162,7 @@ def update_tlm(s_t):
     edit.stopOperation()
 
 def move_a2b(a,b):
+    import arcpy
     workspace = r'E:\Data\yfan\Connection to dgsep011.sde'
     edit = arcpy.da.Editor(workspace)
     edit.startEditing(False, True)
@@ -148,6 +179,7 @@ def move_a2b(a,b):
     edit.stopOperation()
 
 def move(s_t):
+    import arcpy
     del_sp=[]
     moved_sp=[]
     tlm_sp=dict([[s_t[key],[]] for key in s_t])
@@ -198,4 +230,5 @@ def main(fid):
     update_tlm(sp_tlm)
     move(sp_tlm)
     
-    
+if __name__ == "__main__":    
+    print __name__ 
