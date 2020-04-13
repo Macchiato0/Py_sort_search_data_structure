@@ -1,3 +1,6 @@
+import sys
+sys.path.append('E:\\Data\\yfan\\PyModules')
+import removed_to_added_sp
 import functools 
 import copy
 
